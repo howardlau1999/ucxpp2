@@ -17,7 +17,7 @@ class worker;
 class local_address : public noncopyable {
   worker const *worker_;
   ucp_address_t *address_;
-  size_t address_length_;
+  uint32_t address_length_;
   friend class endpoint;
 
 public:
@@ -65,7 +65,7 @@ public:
    *
    * @return size_t The address length
    */
-  size_t get_length() const;
+  uint32_t get_length() const;
 
   /**
    * @brief Destroy the local address object and release the buffer

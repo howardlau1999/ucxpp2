@@ -41,7 +41,7 @@ std::vector<char> local_address::serialize() const {
 
 const ucp_address_t *local_address::get_address() const { return address_; }
 
-size_t local_address::get_length() const { return address_length_; }
+uint32_t local_address::get_length() const { return address_length_; }
 
 local_address::~local_address() {
   if (address_ == nullptr) [[unlikely]] {

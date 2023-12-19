@@ -4,7 +4,8 @@ set(CMAKE_CXX_STANDARD 20)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 find_package(Threads REQUIRED)
-find_package(ucx REQUIRED)
+find_package(PkgConfig)
+pkg_check_modules(ucx REQUIRED IMPORTED_TARGET ucx)
 
 if (NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE RelWithDebInfo)
@@ -30,7 +31,7 @@ set(UCXPP_SOURCE_FILES
 )
 
 add_library(ucxpp STATIC ${UCXPP_SOURCE_FILES})
-set(UCXPP_LINK_LIBRARIES ucx::ucp ucx::uct ucx::ucs Threads::Threads)
+set(UCXPP_LINK_LIBRARIES PkgConfig::ucx Threads::Threads)
 list(APPEND
   UCXPP_COMPILE_OPTIONS
   PRIVATE
@@ -74,5 +75,5 @@ endif ()
 if (UCXPP_LINK_OPTIONS)
   target_link_options(ucxpp ${UCXPP_LINK_OPTIONS})
 endif ()
-target_link_libraries(ucxpp ${UCXPP_LINK_LIBRARIES})
+target_link_libraries(ucxpp PUBLIC ${UCXPP_LINK_LIBRARIES})
 target_include_directories(ucxpp PUBLIC include)
